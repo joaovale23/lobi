@@ -14,7 +14,7 @@ export default function App() {
   }, []);
 
   const spotlightStyle = {
-    background: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.1), rgba(0,0,0,0.95))`,
+    background: `radial-gradient(circle 150px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.1), rgb(0, 0, 0))`,
   };
 
   const handleReveal = (key) => {
@@ -22,7 +22,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full relative bg-black overflow-hidden font-sans">
+    <div className="min-h-screen w-full relative bg-[url('/R.jpg')] bg-cover overflow-hidden font-sans">
       {/* Luz que segue o mouse */}
       <div
         className="absolute inset-0 z-10 pointer-events-none transition-all duration-100"
