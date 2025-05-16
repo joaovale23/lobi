@@ -81,7 +81,7 @@ export default function App() {
 
         <div
           onClick={handleVelaClick}
-          className={`absolute bottom-[0] right-[0] w-24 h-24 bg-contain bg-no-repeat text-black p-4 rounded-xl shadow-lg`}
+          className={`absolute bottom-[0] right-[0] w-24 h-24 bg-contain bg-no-repeat text-black p-4 rounded-xl shadow-lg transition-all duration-700`}
           style={{ backgroundImage: `url(${velaBg})` }}
         ></div>
 
@@ -146,6 +146,10 @@ export default function App() {
 
         <div
           className="absolute top-[70%] left-[25%] w-24 h-24 bg-[url('/auau.png')] bg-contain bg-no-repeat text-black p-4 rounded-xl shadow-lg"
+        ></div>
+
+        <div
+          className="absolute top-[37%] left-[60%] w-24 h-24 bg-[url('/cacos.png')] bg-contain bg-no-repeat text-black p-4 rounded-xl shadow-lg"
         ></div>
       </div>
     </div>
