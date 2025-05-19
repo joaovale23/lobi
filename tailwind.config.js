@@ -5,12 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}", // <- isso aqui é essencial
   ],
   theme: {
-  extend: {
-    transitionDuration: {
-      2000: '2000ms',
-      3000: '3000ms',
+    extend: {
+      transitionDuration: {
+        2000: '2000ms',
+        3000: '3000ms',
+      },
+      fontFamily: {
+        doto: ['Doto', 'sans-serif'],
+      },
     }
-  }
   } ,
   plugins: [
     function ({ addUtilities }) {
