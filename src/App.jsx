@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 
 export default function App() {
@@ -9,6 +9,10 @@ export default function App() {
   const [velaBg, setVelaBg] = useState("/images/tris.png");
   const [joaVisible, setJoaVisible] = useState(false);
   const [carrosselIndex, setCarrosselIndex] = useState(0);
+  const [perguntaIndex, setPerguntaIndex] = useState(0);
+  const [showVideo, setShowVideo] = useState(false);
+  const [typedText, setTypedText] = useState('');
+  const [resetNoButton, setResetNoButton] = useState(0);
 
   const imagensCarrossel = [
     "/images/amo1.jpg",
@@ -25,6 +29,13 @@ export default function App() {
     "09/11/2024 17:19",
   ];
 
+  const perguntas = useMemo(() => [
+  "Ocê me ama?",
+  "Quer viver comigo?",
+  "Deixa eu te cuidar pra sempre?",
+  "Gostou da surpresa? 😭"
+], []);
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -33,6 +44,19 @@ export default function App() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    setTypedText('');
+    setResetNoButton(r => r + 1); // força o NoButton a resetar
+    let i = 0;
+    const current = perguntas[perguntaIndex];
+    const interval = setInterval(() => {
+      setTypedText(current.slice(0, i + 1));
+      i++;
+      if (i === current.length) clearInterval(interval);
+    }, 90); // velocidade da digitação
+    return () => clearInterval(interval);
+  }, [perguntaIndex, perguntas]);
 
   const spotlightStyle = {
     background: spotlightTransparent
@@ -159,7 +183,8 @@ export default function App() {
           onClick={() => setRevealed(prev => ({ ...prev, s2: false }))}
         >
           <div
-            className="relative rounded-2xl flex flex-col items-center justify-center"
+            className="relative rounded-2xl flex flex-col items-center justify-center
+            transition-all duration-500 scale-100 opacity-100 animate-fade-in"
             style={{ minWidth: 500, minHeight: 500, maxWidth: 600 }}
             onClick={e => e.stopPropagation()}
           >
@@ -206,6 +231,44 @@ export default function App() {
           className="fixed inset-0 z-30 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-500"
           onClick={() => setRevealed(prev => ({ ...prev, s3: false }))}
         >
+          <div
+            className="relative bg-[url('/images/plack.png')] bg-[length:650px_750px] bg-center bg-no-repeat pt-[8%] rounded-2xl p-8 flex flex-col items-center justify-center
+            transition-all duration-500 scale-100 opacity-100 animate-fade-in"
+            style={{ minWidth: 650, minHeight: 750, maxWidth: 600 }}
+            onClick={e => e.stopPropagation()}
+          >
+            {!showVideo ? (
+              <>
+                <span className="text-black-900 text-xl px-4 mr-[12%] font-doto mb-8 text-center min-h-[2.5em]">
+                  {typedText}
+                </span>
+                <div className="relative w-full h-32 mr-[12%] flex items-center justify-center">
+                  <NoButton reset={resetNoButton} />
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white text-xl font-doto py-2 px-6 rounded-lg mx-4 transition cursor-none"
+                    onClick={() => {
+                      if (perguntaIndex < perguntas.length - 1) {
+                        setPerguntaIndex(i => i + 1);
+                      } else {
+                        setShowVideo(true);
+                      }
+                    }}
+                  >
+                    Sim
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col mr-[12.5%] items-center justify-center w-full h-full">
+                <span className="text-black-900 text-xl font-doto mb-4 text-center">Ebaaa, eu te amo tanto ❤</span>
+                <div className="w-full flex justify-center">
+                  <video width="200" autoPlay loop className='rounded-lg shadow-lg'>
+                    <source src="/videos/yupii.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -280,5 +343,36 @@ export default function App() {
         </div>
       )}
     </div>
+  );
+}
+
+// Adicione este componente fora do App:
+function NoButton({ reset }) {
+  const [pos, setPos] = useState(null);
+
+  useEffect(() => {
+    setPos(null); // volta ao lugar padrão ao trocar de pergunta
+  }, [reset]);
+
+  const moveButton = () => {
+    const top = Math.random() * 220;
+    const left = Math.random() * 380;
+    setPos({ top, left });
+  };
+
+  return (
+    <button
+      className={
+        "bg-red-500 hover:bg-red-600 text-white text-xl font-doto py-2 px-6 rounded-lg mx-4 transition cursor-none" +
+        (pos ? " absolute" : "")
+      }
+      style={pos ? { top: pos.top, left: pos.left } : {}}
+      onMouseEnter={e => {
+        e.stopPropagation();
+        moveButton();
+      }}
+    >
+      Não
+    </button>
   );
 }
