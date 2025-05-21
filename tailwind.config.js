@@ -31,7 +31,7 @@ export default {
           transform: 'rotateY(30deg)',
         },
         '.rotate-y-45': {
-          transform: 'rotateY(45deg)',
+          transform: 'rotateY(-10deg) rotate(1deg)',
         },
         '.rotate-y-90': {
           transform: 'rotateY(90deg)',
