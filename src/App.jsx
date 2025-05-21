@@ -21,6 +21,7 @@ export default function App() {
   const [typedBichosMessage, setTypedBichosMessage] = useState('');
   const videoRef = useRef(null);
   const maria = useRef(null);
+  const wowAudio = useRef(null);
 
   const setVideoRef = node => {
     if (node) {
@@ -153,6 +154,12 @@ export default function App() {
 
   const handleVelaClick = () => {
   if (!spotlightTransparent) {
+    if (wowAudio.current) {
+    wowAudio.current.currentTime = 0;
+    wowAudio.current.volume = 0.1;
+    wowAudio.current.play();
+    }
+
     setSpotlightVisible(false);
 
     setTimeout(() => {
@@ -488,6 +495,8 @@ export default function App() {
           </div>
         </div>
       )}
+
+      <audio ref={wowAudio} src="/sounds/wow.mp3" preload="auto" />
     </div>
   );
 }
