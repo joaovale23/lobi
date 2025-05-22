@@ -6,8 +6,8 @@ export default function App() {
   const [revealed, setRevealed] = useState({});
   const [spotlightTransparent, setSpotlightTransparent] = useState(false);
   const [spotlightVisible, setSpotlightVisible] = useState(true); // novo estado
-  const [velaBg, setVelaBg] = useState("/images/tris.png");
-  const [backOff, setBackOff] = useState("/images/backoff.png");
+  const [velaBg, setVelaBg] = useState(`${import.meta.env.BASE_URL}images/tris.png`);
+  const [backOff, setBackOff] = useState(`${import.meta.env.BASE_URL}images/backoff.png`);
   const [joaVisible, setJoaVisible] = useState(false);
   const [carrosselIndex, setCarrosselIndex] = useState(0);
   const [perguntaIndex, setPerguntaIndex] = useState(0);
@@ -31,10 +31,10 @@ export default function App() {
   };
 
   const imagensCarrossel = [
-    "/images/amo1.jpg",
-    "/images/amo2.jpg",
-    "/images/amo3.jpg",
-    "/images/amo4.jpg",
+    `${import.meta.env.BASE_URL}images/amo1.jpg`,
+    `${import.meta.env.BASE_URL}images/amo2.jpg`,
+    `${import.meta.env.BASE_URL}images/amo3.jpg`,
+    `${import.meta.env.BASE_URL}images/amo4.jpg`,
   ];
 
   // Array de textos para cada imagem
@@ -175,8 +175,8 @@ export default function App() {
     setSpotlightVisible(true);
   }
 
-  setVelaBg(prev => prev === "/images/tris.png" ? "/images/vela.png" : "/images/tris.png");
-  setBackOff(prev => prev === "/images/backoff.png" ? "/images/back.png" : "/images/backoff.png");
+  setVelaBg(prev => prev === `${import.meta.env.BASE_URL}images/tris.png` ? `${import.meta.env.BASE_URL}images/vela.png` : `${import.meta.env.BASE_URL}images/tris.png`);
+  setBackOff(prev => prev === `${import.meta.env.BASE_URL}images/backoff.png` ? `${import.meta.env.BASE_URL}images/back.png` : `${import.meta.env.BASE_URL}images/backoff.png`);
 };
 
   const handleReveal = (key) => {
@@ -226,7 +226,7 @@ export default function App() {
             width: 40,
             height: 40,
             borderRadius: '50%',
-            background: 'url(/images/joa.png)',
+            background: `url(${import.meta.env.BASE_URL}images/joa.png)`,
             backgroundSize: '35px 35px',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -249,29 +249,33 @@ export default function App() {
         {/* Surpresa 1 */}
         <div
           onClick={() => handleReveal('s1')}
-          className={`absolute top-[51vh] left-[77vw] w-[10vw] h-[17vh] rotate-y-45 bg-[url('/images/fita.png')] bg-contain bg-no-repeat text-black p-4
+          className={`absolute top-[51vh] left-[77vw] w-[10vw] h-[17vh] rotate-y-45 bg-contain bg-no-repeat text-black p-4
             transition-all duration-300 hover:scale-110 ${spotlightTransparent ? "" : "pointer-events-none opacity-60"}`}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/fita.png)` }}
         ></div>
 
         {/* Surpresa 2 */}
         <div
           onClick={() => handleReveal('s2')}
-          className={`absolute top-[70vh] left-[72vw] w-[10vw] h-[30vh] rotate-x-30 bg-[url('/images/copa.png')] bg-contain bg-no-repeat text-black p-4
+          className={`absolute top-[70vh] left-[72vw] w-[10vw] h-[30vh] rotate-x-30 bg-contain bg-no-repeat text-black p-4
             transition-all duration-300 hover:scale-105 ${spotlightTransparent ? "" : "pointer-events-none opacity-60"}`}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/copa.png)` }}
         ></div>
 
         {/* Surpresa 3 */}
         <div
           onClick={() => handleReveal('s3')}
-          className={`absolute top-[43vh] left-[0vw] w-[10vw] h-[30vh] bg-[url('/images/planilha.png')] bg-contain bg-no-repeat text-black p-4
+          className={`absolute top-[43vh] left-[0vw] w-[10vw] h-[30vh] bg-contain bg-no-repeat text-black p-4
             transition-all duration-300 hover:scale-105 ${spotlightTransparent ? "" : "pointer-events-none opacity-60"}`}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/planilha.png)` }}
         ></div>
 
         {/* Surpresa 4 */}
         <div
           onClick={() => handleReveal('s4')}
-          className={`absolute top-[65vh] left-[13vw] w-[10vw] h-[20vh] rotate-x-30 bg-[url('/images/bichos.png')] bg-contain bg-no-repeat text-black p-4
+          className={`absolute top-[65vh] left-[13vw] w-[10vw] h-[20vh] rotate-x-30 bg-contain bg-no-repeat text-black p-4
             transition-all duration-300 hover:scale-105 ${spotlightTransparent ? "" : "pointer-events-none opacity-60"}`}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/bichos.png)` }}
         ></div>
       </div>
 
@@ -291,11 +295,16 @@ export default function App() {
           className="fixed inset-0 z-30 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-500"
           onClick={() => setRevealed(prev => ({ ...prev, s1: false }))}
         >
-          <audio ref={maria} src="/sounds/maria.m4a" preload="auto" />
+          <audio ref={maria} src={`${import.meta.env.BASE_URL}sounds/maria.m4a`} preload="auto" />
           <div
-            className="relative rounded-2xl flex bg-[url('/images/fita.png')] bg-center bg-contain bg-no-repeat flex-col items-center justify-center
+            className="relative rounded-2xl flex bg-center bg-contain bg-no-repeat flex-col items-center justify-center
             transition-all duration-500 scale-100 opacity-100 animate-fade-in"
-            style={{ minWidth: 500, minHeight: 500, maxWidth: 600 }}
+            style={{
+              minWidth: 500,
+              minHeight: 500,
+              maxWidth: 600,
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/fita.png)`,
+            }}
             onClick={e => e.stopPropagation()}
           ></div>
         </div>
@@ -323,7 +332,8 @@ export default function App() {
           >
             <div className="relative flex items-center justify-center">
               <button
-                className="w-[3vw] h-[3vh] px-2 py-1 bg-[url('/images/setal.png')] bg-center bg-contain bg-no-repeat rounded hover:scale-110 transition cursor-none"
+                className="w-[3vw] h-[3vh] px-2 py-1 bg-center bg-contain bg-no-repeat rounded hover:scale-110 transition cursor-none"
+                style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/setal.png)` }}
                 onClick={() => setCarrosselIndex(i => (i === 0 ? imagensCarrossel.length - 1 : i - 1))}
               >
               </button>
@@ -331,7 +341,7 @@ export default function App() {
                 <div
                   className="absolute inset-0 pointer-events-none pb-[20%] pl-[4%] flex items-end justify-start"
                   style={{
-                    backgroundImage: "url('/images/mold.png')",
+                    backgroundImage: `url(${import.meta.env.BASE_URL}images/mold.png)`,
                     backgroundSize: "100% 100%",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -349,7 +359,8 @@ export default function App() {
                 />
               </div>
               <button
-                className="w-[3vw] h-[3vh] px-2 py-1 bg-[url('/images/setar.png')] bg-center bg-contain bg-no-repeat rounded hover:scale-110 transition cursor-none"
+                className="w-[3vw] h-[3vh] px-2 py-1 bg-center bg-contain bg-no-repeat rounded hover:scale-110 transition cursor-none"
+                style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/setar.png)` }}
                 onClick={() => setCarrosselIndex(i => (i === imagensCarrossel.length - 1 ? 0 : i + 1))}
               >
               </button>
@@ -373,9 +384,17 @@ export default function App() {
           onClick={() => setRevealed(prev => ({ ...prev, s3: false }))}
         >
           <div
-            className="relative bg-[url('/images/plack.png')] bg-[length:650px_750px] bg-center bg-no-repeat pt-[8%] rounded-2xl p-8 flex flex-col items-center justify-center
+            className="relative pt-[8%] rounded-2xl p-8 flex flex-col items-center justify-center
             transition-all duration-500 scale-100 opacity-100 animate-fade-in"
-            style={{ minWidth: 650, minHeight: 750, maxWidth: 600 }}
+            style={{
+              minWidth: 650,
+              minHeight: 750,
+              maxWidth: 600,
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/plack.png)`,
+              backgroundSize: "650px 750px",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
             onClick={e => e.stopPropagation()}
           >
             {!showVideo ? (
@@ -408,7 +427,7 @@ export default function App() {
                 <span className="text-black-900 text-xl font-doto mb-4 text-center">Ebaaa, eu te amo tanto ❤</span>
                 <div className="w-full flex justify-center">
                   <video ref={setVideoRef} width="200" autoPlay loop className='rounded-lg shadow-lg'>
-                    <source src="/videos/yupii.mp4" type="video/mp4" />
+                    <source src={`${import.meta.env.BASE_URL}videos/yupii.mp4`} type="video/mp4" />
                   </video>
                 </div>
               </div>
@@ -432,10 +451,19 @@ export default function App() {
           onClick={() => setRevealed(prev => ({ ...prev, s4: false }))}
         >
           <div
-            className="relative z-40 bg-[url('/images/bichos.png')] bg-center bg-contain bg-no-repeat text-black rounded-2xl shadow-2xl p-8 flex flex-wrap items-center justify-center gap-5
+            className="relative z-40 text-black rounded-2xl shadow-2xl p-8 flex flex-wrap items-center justify-center gap-5
               transition-all duration-500 scale-100 opacity-100 animate-fade-in"
-            style={{ minWidth: 450, minHeight: 600, maxWidth: 450, maxHeight: 1000 }}
-            onClick={e => e.stopPropagation()} // impede fechar ao clicar dentro do modal
+            style={{
+              minWidth: 450,
+              minHeight: 600,
+              maxWidth: 450,
+              maxHeight: 1000,
+              backgroundImage: `url(${import.meta.env.BASE_URL}images/bichos.png)`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain",
+            }}
+            onClick={e => e.stopPropagation()}
           >
 
             <div className="w-[8vw] h-[15vh] mt-20">
@@ -496,7 +524,7 @@ export default function App() {
         </div>
       )}
 
-      <audio ref={wowAudio} src="/sounds/wow.mp3" preload="auto" />
+      <audio ref={wowAudio} src={`${import.meta.env.BASE_URL}sounds/wow.mp3`} preload="auto" />
     </div>
   );
 }
